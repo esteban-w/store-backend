@@ -1,5 +1,5 @@
 {
-  "name": "storefront_backend",
+  "name": "store_backend",
   "version": "0.1.0",
   "description": "",
   "main": "server.ts",
