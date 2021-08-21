@@ -52,3 +52,14 @@ Add JWT functionality as shown in the course. Make sure that JWTs are required f
 Before submitting, make sure that your project is complete with a `README.md`. Your `README.md` must include instructions for setting up and running your project including how you setup, run, and connect to your database. 
 
 Before submitting your project, spin it up and test each endpoint. If each one responds with data that matches the data shapes from the `REQUIREMENTS.md`, it is ready for submission!
+
+## Dependencies
+- Docker
+
+## Setting up
+- Before running postgres using docker, you need to create a .env file and include at least `POSTGRES_PASSWORD` with a value, e.g.
+`POSTGRES_PASSWORD=pass123` if you don't include any other value, both your database user and database name will be set to `postgres`,
+to specifically set a database user and database name you need to include `POSTGRES_USER` and `POSTGRES_DB` values, 
+e.g. `POSTGRES_USER=store_admin` `POSTGRES_DB=store_dev`
+- after creating .env and including your variables, you can spin up docker container by running: `docker-compose up`
+- once your docker container is running you can shell into your instance by running: `docker-compose exec postgres /bin/bash`
