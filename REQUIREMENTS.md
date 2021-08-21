@@ -17,7 +17,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 - Create N[token required] | '/users' [POST]
 
 #### Orders
-- Current Order by user (args: user id)[token required] | '/orders/user/:id' [GET]
+- Current Order by user (args: user id)[token required] | '/users/:id/order' [GET]
 - [OPTIONAL] Completed Orders by user (args: user id)[token required]
 
 ## Data Shapes
@@ -28,11 +28,13 @@ These are the notes from a meeting with the frontend developer that describe wha
 - [OPTIONAL] category
     
     ##### Table 
+    ```
     products (
         id SERIAL PRIMARY KEY, 
         name VARCHAR NOT NULL, 
         price integer NOT NULL
     );
+    ```
 
 #### User
 - id
@@ -41,13 +43,15 @@ These are the notes from a meeting with the frontend developer that describe wha
 - password
 
     ##### Table
+    ```
     users (
         id SERIAL PRIMARY KEY, 
         firstName VARCHAR(150),
         lastName VARCHAR(150),
-        username VARCHAR NOT NULL,
+        email VARCHAR NOT NULL,
         password VARCHAR NOT NULL
     );
+    ```
 
 #### Orders
 - id
@@ -57,6 +61,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 - status of order (active or complete)
 
     ##### Table
+    ```
     orders (
         id SERIAL PRIMARY KEY,
         status VARCHAR(70),
@@ -69,3 +74,4 @@ These are the notes from a meeting with the frontend developer that describe wha
         order_id bigint REFERENCES orders(id),
         product_id bigint REFERENCES products(id)
     );
+    ```
