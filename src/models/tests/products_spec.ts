@@ -11,4 +11,12 @@ describe("Product Model", () => {
         const result = await store.index();
         expect(result).toEqual([]);
     });
+
+    it('should have a show method', () => {
+        expect(store.show).toBeDefined();
+    });
+
+    it('should have a create method', () => {
+        expect(store.create).toBeDefined();
+    });
 });
