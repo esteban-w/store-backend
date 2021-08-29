@@ -63,3 +63,20 @@ to specifically set a database user and database name you need to include `POSTG
 e.g. `POSTGRES_USER=store_admin` `POSTGRES_DB=store_dev`
 - after creating .env and including your variables, you can spin up docker container by running: `docker-compose up`
 - once your docker container is running you can shell into your instance by running: `docker-compose exec postgres /bin/bash`
+- for running tests, it's necessary to set up an independent db.
+    with your docker container running, shell into your postgres instance:
+    ```
+    docker-compose exec postgres /bin/bash
+    ```
+    open psql using your created user (if you specified `POSTGRES_USER` use that value, else use `postgres` as user)
+    ```
+    psql postgres --user <specify your created user>
+    ```
+    create your test db
+    ```
+    create database <name of your test db>
+    ```
+    list databases to confirm your test db was created
+    ```
+    \l
+    ```
