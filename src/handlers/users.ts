@@ -3,6 +3,7 @@ import {User, UserStore} from "../models/users";
 import jwt from "jsonwebtoken"
 
 const store = new UserStore()
+const { TOKEN_SECRET = '' } = process.env
 
 const index = async (_req: Request, res: Response) => {
     const result = await store.index()
@@ -24,7 +25,6 @@ const create = async (req: Request, res: Response) => {
 
     try {
         const result = await store.create(entity)
-        const { TOKEN_SECRET = '' } = process.env
         const token = jwt.sign({ user: entity }, TOKEN_SECRET)
         res.json(token)
     } catch (e) {
@@ -33,8 +33,13 @@ const create = async (req: Request, res: Response) => {
 }
 
 const authenticate = async (req: Request, res: Response) => {
-    const result = await store.authenticate(req.body.username, req.body.password)
-    res.json(result)
+    try {
+        const result = await store.authenticate(req.body.username, req.body.password)
+        const token = jwt.sign({user: result}, TOKEN_SECRET)
+        res.json(token)
+    } catch (e) {
+        res.status(400).json(e)
+    }
 }
 
 const user_routes = (app: express.Application) => {
