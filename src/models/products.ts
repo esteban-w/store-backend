@@ -34,9 +34,13 @@ export class ProductStore {
     }
 
     async create(product: Product): Promise<Product> {
+        if (!product.name || !product.price) {
+            throw new Error('name and price must be provided')
+        }
+
         try {
             const conn = await Client.connect();
-            const sql = `INSERT INTO products(name, price) VALUES(${product.name}, ${product.price}) RETURNING *`;
+            const sql = `INSERT INTO products(name, price) VALUES('${product.name}', ${product.price}) RETURNING *`;
             const result = await conn.query(sql);
             conn.release()
 
