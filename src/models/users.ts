@@ -69,7 +69,7 @@ export class UserStore {
         }
 
         const conn = await Client.connect()
-        const sql = `SELECT password FROM users WHERE email = '${email}'`
+        const sql = `SELECT * FROM users WHERE email = '${email}'`
         const result = await conn.query(sql)
 
         if (result.rows.length) {
