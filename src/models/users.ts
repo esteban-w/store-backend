@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt'
 
 const {
     BCRYPT_PASSWORD,
-    SALT_ROUNDS = 10,
+    SALT_ROUNDS = '10',
 } = process.env
 
 export type User = {
@@ -42,14 +42,18 @@ export class UserStore {
     }
 
     async create(user: User): Promise<User> {
+        if (!user.email || !user.password) {
+            throw new Error('email and password are required values')
+        }
+
         try {
             const conn = await Client.connect();
             const hash = bcrypt.hashSync(
                 user.password + BCRYPT_PASSWORD,
-                SALT_ROUNDS
+                parseInt(SALT_ROUNDS)
             );
             const sql = `INSERT INTO users(firstName, lastName, email, password) 
-                VALUES(${user.firstName}, ${user.lastName}, ${user.email}, ${hash}) RETURNING *`;
+                VALUES('${user.firstName}', '${user.lastName}', '${user.email}', '${hash}') RETURNING *`;
             const result = await conn.query(sql);
             conn.release()
 
@@ -59,9 +63,13 @@ export class UserStore {
         }
     }
 
-    async authenticate(username: string, password: string): Promise<User | null> {
+    async authenticate(email: string, password: string): Promise<User | null> {
+        if (!email || !password) {
+            throw new Error('email and password are required values')
+        }
+
         const conn = await Client.connect()
-        const sql = `SELECT password FROM users WHERE username = ${username}`
+        const sql = `SELECT password FROM users WHERE email = '${email}'`
         const result = await conn.query(sql)
 
         if (result.rows.length) {

@@ -28,17 +28,17 @@ const create = async (req: Request, res: Response) => {
         const token = jwt.sign({ user: entity }, TOKEN_SECRET)
         res.json(token)
     } catch (e) {
-        res.status(400).json(`${e}${entity}`)
+        res.status(400).json(`${e} ${entity}`)
     }
 }
 
 const authenticate = async (req: Request, res: Response) => {
     try {
-        const result = await store.authenticate(req.body.username, req.body.password)
+        const result = await store.authenticate(req.body.email, req.body.password)
         const token = jwt.sign({user: result}, TOKEN_SECRET)
         res.json(token)
     } catch (e) {
-        res.status(400).json(e)
+        res.status(400).json(`${e}`)
     }
 }
 
