@@ -63,6 +63,8 @@ to specifically set a database user and database name you need to include `POSTG
 e.g. `POSTGRES_USER=store_admin` `POSTGRES_DB=store_dev`
 - after creating .env and including your variables, you can spin up docker container by running: `docker-compose up`
 - once your docker container is running you can shell into your instance by running: `docker-compose exec postgres /bin/bash`
+- having your docker container running, start the application by running: `npm run watch`
+- from root folder run: `db-migrate up` to create corresponding tables
 - for running tests, it's necessary to set up an independent db.
     with your docker container running, shell into your postgres instance:
     ```
