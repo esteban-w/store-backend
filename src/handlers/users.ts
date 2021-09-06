@@ -29,10 +29,16 @@ const create = async (req: Request, res: Response) => {
     }
 }
 
+const authenticate = async (req: Request, res: Response) => {
+    const result = await store.authenticate(req.body.username, req.body.password)
+    res.json(result)
+}
+
 const user_routes = (app: express.Application) => {
     app.get('/users', index)
     app.get('/users/:id', show)
     app.post('/users', create)
+    app.post('/users/authenticate', authenticate)
 }
 
 export default user_routes;
