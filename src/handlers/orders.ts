@@ -1,6 +1,6 @@
-import express, {Request, Response} from "express";
-import {Order, OrderStore} from "../models/orders";
-import verifyAuthToken from "../middleware/verify_auth_token";
+import express, {Request, Response} from 'express'
+import {Order, OrderStore} from '../models/orders'
+import verifyAuthToken from '../middleware/verify_auth_token'
 
 const store = new OrderStore()
 
@@ -12,15 +12,22 @@ const create = async (req: Request, res: Response) => {
         }
 
         const result = await store.create(entity)
-        res.json(result)
+        res
+            .append('Access-Control-Allow-Origin','*')
+            .json(result)
     } catch (e) {
-        res.status(400).json(`${e}`)
+        res
+            .append('Access-Control-Allow-Origin','*')
+            .status(400)
+            .json(`${e}`)
     }
 }
 
 const getCurrentOrder = async (req: Request, res: Response) => {
     const result = await store.getCurrentOrder(parseInt(req.params.id))
-    res.json(result)
+    res
+        .append('Access-Control-Allow-Origin','*')
+        .json(result)
 }
 
 const order_routes = (app: express.Application) => {
@@ -28,4 +35,4 @@ const order_routes = (app: express.Application) => {
     app.post('/orders', verifyAuthToken, create)
 }
 
-export default order_routes;
+export default order_routes

@@ -17,12 +17,12 @@ export type User = {
 export class UserStore {
     async index(): Promise<User[]> {
         try {
-            const conn = await Client.connect();
-            const sql = 'SELECT * FROM users';
-            const result = await conn.query(sql);
+            const conn = await Client.connect()
+            const sql = 'SELECT * FROM users'
+            const result = await conn.query(sql)
             conn.release()
 
-            return result.rows;
+            return result.rows
         } catch (err) {
             throw new Error(`Cannot get users: ${err}`)
         }
@@ -30,12 +30,12 @@ export class UserStore {
 
     async show(id: number): Promise<User> {
         try {
-            const conn = await Client.connect();
-            const sql = `SELECT * FROM users WHERE id = ${id}`;
-            const result = await conn.query(sql);
+            const conn = await Client.connect()
+            const sql = `SELECT * FROM users WHERE id = ${id}`
+            const result = await conn.query(sql)
             conn.release()
 
-            return result.rows[0];
+            return result.rows[0]
         } catch (err) {
             throw new Error(`Cannot get user: ${err}`)
         }
@@ -47,17 +47,17 @@ export class UserStore {
         }
 
         try {
-            const conn = await Client.connect();
+            const conn = await Client.connect()
             const hash = bcrypt.hashSync(
                 user.password + BCRYPT_PASSWORD,
                 parseInt(SALT_ROUNDS)
             );
             const sql = `INSERT INTO users(firstName, lastName, email, password) 
-                VALUES('${user.firstName}', '${user.lastName}', '${user.email}', '${hash}') RETURNING *`;
-            const result = await conn.query(sql);
+                VALUES('${user.firstName}', '${user.lastName}', '${user.email}', '${hash}') RETURNING *`
+            const result = await conn.query(sql)
             conn.release()
 
-            return result.rows[0];
+            return result.rows[0]
         } catch (err) {
             throw new Error(`Cannot create user: ${err}`)
         }

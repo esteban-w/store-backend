@@ -1,4 +1,4 @@
-import {Request, Response, NextFunction} from "express"
+import {Request, Response, NextFunction} from 'express'
 import jwt from 'jsonwebtoken'
 
 const verifyAuthToken = (req: Request, res: Response, next: NextFunction) => {
@@ -10,7 +10,10 @@ const verifyAuthToken = (req: Request, res: Response, next: NextFunction) => {
 
         next()
     } catch (e) {
-        res.status(401).json(`${e}`)
+        res
+            .append('Access-Control-Allow-Origin','*')
+            .status(401)
+            .json(`${e}`)
     }
 }
 

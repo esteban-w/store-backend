@@ -1,22 +1,22 @@
-import {Product, ProductStore} from "../products";
+import {Product, ProductStore} from '../products'
 
-const store = new ProductStore();
+const store = new ProductStore()
 
-describe("Product Model", () => {
+describe('Product Model', () => {
     it('should have an index method', () => {
-        expect(store.index).toBeDefined();
-    });
+        expect(store.index).toBeDefined()
+    })
 
     it('index method should return a list of products', async () => {
-        const result = await store.index();
-        expect(result).toEqual([]);
-    });
+        const result = await store.index()
+        expect(result).toEqual([])
+    })
 
     it('should have a show method', () => {
-        expect(store.show).toBeDefined();
-    });
+        expect(store.show).toBeDefined()
+    })
 
     it('should have a create method', () => {
-        expect(store.create).toBeDefined();
-    });
-});
+        expect(store.create).toBeDefined()
+    })
+})

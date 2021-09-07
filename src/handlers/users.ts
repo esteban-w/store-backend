@@ -1,19 +1,23 @@
-import express, {Request, Response} from "express";
-import {User, UserStore} from "../models/users";
-import jwt from "jsonwebtoken"
-import verifyAuthToken from "../middleware/verify_auth_token";
+import express, {Request, Response} from 'express'
+import {User, UserStore} from '../models/users'
+import jwt from 'jsonwebtoken'
+import verifyAuthToken from '../middleware/verify_auth_token'
 
 const store = new UserStore()
 const { TOKEN_SECRET = '' } = process.env
 
 const index = async (_req: Request, res: Response) => {
     const result = await store.index()
-    res.json(result)
+    res
+        .append('Access-Control-Allow-Origin','*')
+        .json(result)
 }
 
 const show = async (req: Request, res: Response) => {
     const result = await store.show(parseInt(req.params.id))
-    res.json(result)
+    res
+        .append('Access-Control-Allow-Origin','*')
+        .json(result)
 }
 
 const create = async (req: Request, res: Response) => {
@@ -27,9 +31,14 @@ const create = async (req: Request, res: Response) => {
     try {
         const result = await store.create(entity)
         const token = jwt.sign({ user: entity }, TOKEN_SECRET)
-        res.json(token)
+        res
+            .append('Access-Control-Allow-Origin','*')
+            .json(token)
     } catch (e) {
-        res.status(400).json(`${e} ${entity}`)
+        res
+            .append('Access-Control-Allow-Origin','*')
+            .status(400)
+            .json(`${e} ${entity}`)
     }
 }
 
@@ -37,9 +46,14 @@ const authenticate = async (req: Request, res: Response) => {
     try {
         const result = await store.authenticate(req.body.email, req.body.password)
         const token = jwt.sign({user: result}, TOKEN_SECRET)
-        res.json(token)
+        res
+            .append('Access-Control-Allow-Origin','*')
+            .json(token)
     } catch (e) {
-        res.status(400).json(`${e}`)
+        res
+            .append('Access-Control-Allow-Origin','*')
+            .status(400)
+            .json(`${e}`)
     }
 }
 
@@ -50,4 +64,4 @@ const user_routes = (app: express.Application) => {
     app.post('/users/authenticate', authenticate)
 }
 
-export default user_routes;
+export default user_routes
