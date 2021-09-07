@@ -7,6 +7,19 @@ export type Order = {
 }
 
 export class OrderStore {
+    async create(order: Order): Promise<Order> {
+        try {
+            const conn = await  Client.connect()
+            const sql = `INSERT INTO orders(status, user_id) VALUES('${order.status}', ${order.user_id}) RETURNING *`
+            const result = await conn.query(sql)
+            conn.release()
+
+            return result.rows[0]
+        } catch (e) {
+            throw new Error(`Cannot create order: ${e}`)
+        }
+    }
+
     async getCurrentOrder(userId: number): Promise<Order | null> {
         try {
             const conn = await Client.connect();
