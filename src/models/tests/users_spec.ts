@@ -9,7 +9,7 @@ describe('User Model', () => {
 
     it('index method should return a list of users', async () => {
         const result = await store.index()
-        expect(result).toEqual([])
+        expect(Array.isArray(result)).toBeTrue()
     })
 
     it('should have a show method', () => {
