@@ -14,11 +14,15 @@ These are the notes from a meeting with the frontend developer that describe wha
 #### Users
 - Index [token required] | '/users' [GET]
 - Show [token required] | '/users/:id' [GET]
-- Create N[token required] | '/users' [POST]
+- Create [token required] | '/users' [POST]
 
 #### Orders
+- Create [token required] | '/orders' [POST]
 - Current Order by user (args: user id)[token required] | '/users/:id/order' [GET]
 - [OPTIONAL] Completed Orders by user (args: user id)[token required]
+
+#### Order Products
+- Add product to Order (args: order id)[token required] | '/orders/:id/products' [POST]
 
 ## Data Shapes
 #### Product
