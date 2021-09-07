@@ -123,3 +123,4 @@ e.g. `POSTGRES_USER=store_admin` `POSTGRES_DB=store_dev`.
     ```
     exit
     ```
+- Once you have your test database set up, you can perform tests by running: `npm run test` from the project's root folder.
