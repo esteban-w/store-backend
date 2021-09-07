@@ -11,16 +11,12 @@ describe('Test endpoint responses', () => {
             .set('Content-Type', 'application/json')
             .send({"email": "user@email.com", "password": "pass123"})
         userToken = response.body
-        console.log('beforeAll POST /users')
-        console.log(response.body)
     })
 
     it('should create a user /users endpoint', async () => {
         const response = await request.post('/users')
             .set('Content-Type', 'application/json')
             .send({"email": "test@email.com", "password": "pass123"})
-        console.log('POST /users')
-        console.log(response.body)
 
         expect(response.status).toBe(200)
     })
@@ -29,8 +25,6 @@ describe('Test endpoint responses', () => {
         const response = await request.get('/users')
             .set('Accept', 'application/json')
             .set('Authorization', `Bearer ${userToken}`)
-        console.log('GET /users')
-        console.log(response.body)
 
         expect(Array.isArray(response.body)).toBeTrue()
     })
@@ -39,8 +33,6 @@ describe('Test endpoint responses', () => {
         const response = await request.get('/users/1')
             .set('Accept', 'application/json')
             .set('Authorization', `Bearer ${userToken}`)
-        console.log('GET /users/1')
-        console.log(response.body)
 
         expect(response.status).toBe(200)
     })
@@ -53,8 +45,6 @@ describe('Test endpoint responses', () => {
                 "name": "Product Test Name",
                 "price": 333
             })
-        console.log('POST /products')
-        console.log(response.body)
 
         expect(response.status).toBe(200)
     })
@@ -62,8 +52,6 @@ describe('Test endpoint responses', () => {
     it('should return products from /products endpoint', async () => {
         const response = await request.get('/products')
             .set('Accept', 'application/json')
-        console.log('GET /products')
-        console.log(response.body)
 
         expect(Array.isArray(response.body)).toBeTrue()
     })
@@ -71,8 +59,6 @@ describe('Test endpoint responses', () => {
     it('should return product by id from /products/:id endpoint', async () => {
         const response = await request.get('/products/1')
             .set('Accept', 'application/json')
-        console.log('GET /products/1')
-        console.log(response.body)
 
         expect(response.status).toBe(200)
     })
@@ -85,8 +71,6 @@ describe('Test endpoint responses', () => {
                 "status": "active",
                 "user_id": 1
             })
-        console.log('POST /orders')
-        console.log(response.body)
 
         expect(response.status).toBe(200)
     })
@@ -95,8 +79,18 @@ describe('Test endpoint responses', () => {
         const response = await request.get('/users/1/order')
             .set('Accept', 'application/json')
             .set('Authorization', `Bearer ${userToken}`)
-        console.log('GET /users/1/order')
-        console.log(response.body)
+
+        expect(response.status).toBe(200)
+    })
+
+    it('should add product to order /orders/:id/products endpoint', async () => {
+        const response = await request.post('/orders/1/products')
+            .set('Content-Type', 'application/json')
+            .set('Authorization', `Bearer ${userToken}`)
+            .send({
+                "product_id": 1,
+                "quantity": 1
+            })
 
         expect(response.status).toBe(200)
     })
