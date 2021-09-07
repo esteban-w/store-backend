@@ -67,7 +67,16 @@ These are the notes from a meeting with the frontend developer that describe wha
         status VARCHAR(70),
         user_id bigint REFERENCES users(id)
     );
+    ```
 
+#### Order Products
+- id
+- order id
+- id of each product in the order
+- quantity of each product in the order
+
+    ##### Table
+    ```
     order_products (
         id SERIAL PRIMARY KEY,
         quantity integer,

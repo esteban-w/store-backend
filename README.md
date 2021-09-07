@@ -80,6 +80,17 @@ e.g. `POSTGRES_USER=store_admin` `POSTGRES_DB=store_dev`.
   Accept: application/json
   Authorization: Bearer <returned token from user creation request>
   ```
+- Provide token in POST request for adding product to order endpoint
+  ```
+  POST http://localhost:3000/orders/1/products
+  Content-Type: application/json
+  Authorization: Bearer <returned token from user creation request>
+  
+  {
+    "product_id": 1,
+    "quantity": 1
+  }
+  ```
 
 ## Running tests
 - For running tests, it's necessary to set up an independent database.
